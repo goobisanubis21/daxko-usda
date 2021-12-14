@@ -25,6 +25,7 @@ const HomeComp = () => {
                 foodArray.push(data)
                 setData(foodArray)
             })
+            .catch(err => console.log(err))
     }
 
     function index() {
@@ -52,26 +53,36 @@ const HomeComp = () => {
 
     return (
         <div>
+            <div className='title-container'>
+                <h1>Food Finder</h1>
+                <p>Search the USDA database for a type of food and get all the info you need.</p>
+                <p>Create a list of saved foods you are interested in</p>
+            </div>
             <div className='search-container'>
                 <input className='search' placeholder='Enter a Food'></input>
                 <button className='search-btn' onClick={getSearch}>Search</button>
             </div>
-            <div>
+            <div className='main-content'>
                 {data.map(food => (
-                    <div key={index}>
-                        {food.foods.map(item => (
-                            <div key={item.fdcId}>
-                                <h1 id={item.fdcId} onClick={showInfo}>{item.description}</h1>
-
-                            </div>
-                        ))}
-                        <div id='info-container' className='hidden'>
-                            <InfoComp
-                                data={clickedData}
-                                hideInfo={hideInfo}
-                            />
+                    food.totalHits === 0
+                        ?
+                        <div key={food.totalHits}>
+                            <p>Item Not Found</p>
                         </div>
-                    </div>
+                        :
+                        <div key={index}>
+                            {food.foods.map(item => (
+                                <div key={item.fdcId}>
+                                    <h2 className='searched-list-items' id={item.fdcId} onClick={showInfo}>{item.description}</h2>
+                                </div>
+                            ))}
+                            <div id='info-container' className='hidden'>
+                                <InfoComp
+                                    data={clickedData}
+                                    hideInfo={hideInfo}
+                                />
+                            </div>
+                        </div>
                 ))}
             </div>
         </div>

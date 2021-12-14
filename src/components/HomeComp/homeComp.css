@@ -6,6 +6,19 @@
     display: block;
 }
 
+.title-container {
+    text-align: center;
+}
+
+.title-container h1 {
+    font-size: 50px;
+    font-family: sans-serif;
+}
+
+.title-container p {
+    color: rgb(161, 161, 161);
+}
+
 .search-container {
     text-align: center;
 
@@ -18,3 +31,24 @@
     margin: 10px;
 }
 
+.search-btn {
+    padding: 10px;
+    color: white;
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.search-btn:hover {
+    background-color: rgb(39, 65, 44);
+}
+
+.main-content {
+    text-align: center;
+}
+
+.searched-list-items {
+    cursor: pointer;
+    margin: 20px;
+}
