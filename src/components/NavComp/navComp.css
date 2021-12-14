@@ -1,0 +1,9 @@
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.nav-container p {
+    margin-right: 25px;
+}

@@ -1,0 +1,20 @@
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.search-container {
+    text-align: center;
+
+}
+
+.search {
+    width: 150px;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+}
+

@@ -1,0 +1,21 @@
+.modal {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 5px;
+    left: 50%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 5px black;
+    padding: 10px;
+}
+
+.x-container {
+    text-align: right;
+    position: relative;
+}
+
+.x {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+}
