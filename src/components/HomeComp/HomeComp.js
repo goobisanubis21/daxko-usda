@@ -6,20 +6,19 @@ import './homeComp.css';
 
 const HomeComp = () => {
 
-    // const USDA_URL = "https://api.nal.usda.gov/fdc/v1/foods/search?query=apple&pageSize=2&api_key=rTCM1DqeIDLeCShyqxcRK6OJWssuxxKlTl0FylLQ";
-    // const API_KEY = 'rTCM1DqeIDLeCShyqxcRK6OJWssuxxKlTl0FylLQ'
-
-
+    // state management
     const [data, setData] = useState([])
     const [clickedData, setClickedData] = useState([])
     const [cartNum, setCartNum] = useState(0)
 
+    // getting search value and calling handle search function
     function getSearch(e) {
         e.preventDefault()
         let search = document.querySelector('.search').value
         handleSearch(search)
     }
 
+    // send a fetch request to usda api and returning data based upon search value parameter
     function handleSearch(food) {
         fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?query=${food}&pageSize=10&api_key=rTCM1DqeIDLeCShyqxcRK6OJWssuxxKlTl0FylLQ&dataType=Survey (FNDDS)`)
             .then(res => res.json())
@@ -32,13 +31,16 @@ const HomeComp = () => {
             .catch(err => console.log(err))
     }
 
+    // function to return a unique key when mapping
     function index() {
         let i = 0
         i++
         return i
     }
 
+    // function to hide or show data when clicking on a food in the list
     function showInfo(e) {
+        //  setting state to be equal to which food is being clicked on to get that specific foods data
         setClickedData(data[0].foods.filter(food => food.fdcId === parseInt(e.target.id)))
         let infoContainer = document.getElementById('info-container')
         if (infoContainer.getAttribute('class') === 'hidden') {
@@ -48,31 +50,36 @@ const HomeComp = () => {
 
     }
 
+    // function to hide the info when the 'x' button is clicked on the info card
     function hideInfo() {
         let infoContainer = document.getElementById('info-container')
         infoContainer.removeAttribute('class', 'show')
         infoContainer.setAttribute('class', 'hidden')
     }
 
+    // local storage function
     function saveToCart() {
+        // getting local storage if it exsits and if not then setting it to an empty array
         let storage = JSON.parse(localStorage.getItem('savedFoodItems'))
         if (storage === null) {
             storage = []
         }
+        // creating an object with the data of the food that was clicked on to save
         let foodItem = {
             id: clickedData[0].fdcId,
             name: clickedData[0].description,
             cal: clickedData[0].foodNutrients[3].value
         }
+        // pushing that object to local storage
         storage.push(foodItem)
         localStorage.setItem('savedFoodItems', JSON.stringify(storage))
-        setCartNum(cartNum +1)
+        setCartNum(cartNum + 1)
     }
 
 
     return (
         <div>
-            <NavComp 
+            <NavComp
                 num={cartNum}
             />
             <div className='title-container'>
@@ -87,6 +94,13 @@ const HomeComp = () => {
                 </form>
             </div>
             <div className='main-content'>
+                <div id='info-container' className='hidden'>
+                    <InfoComp
+                        data={clickedData}
+                        hideInfo={hideInfo}
+                        saveToCart={saveToCart}
+                    />
+                </div>
                 {data.map(food => (
                     food.totalHits === 0
                         ?
@@ -100,13 +114,7 @@ const HomeComp = () => {
                                     <h2 className='searched-list-items' id={item.fdcId} onClick={showInfo}>{item.description}</h2>
                                 </div>
                             ))}
-                            <div id='info-container' className='hidden'>
-                                <InfoComp
-                                    data={clickedData}
-                                    hideInfo={hideInfo}
-                                    saveToCart={saveToCart}
-                                />
-                            </div>
+
                         </div>
                 ))}
             </div>

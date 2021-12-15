@@ -5,6 +5,7 @@ import './cartComp.css';
 
 const CartComp = () => {
 
+    // getting local storage and checking if its null
     const storage = JSON.parse(localStorage.getItem('savedFoodItems'))
     if (storage === null || storage.length === 0) {
         return (
@@ -18,6 +19,7 @@ const CartComp = () => {
         )
     } else {
 
+        // calculating total calorie count in the cart
         let calArray = []
 
         for (let i = 0; i < storage.length; i++) {
@@ -28,6 +30,7 @@ const CartComp = () => {
             return a + b
         }, 0)
 
+        // updating storage by removing item that is clicked on to remove an item from cart
         function removeItem(e) {
             let newStorage = storage.filter(remove => remove.id !== parseInt(e.target.id))
             console.log(newStorage)

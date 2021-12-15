@@ -22,3 +22,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.remove-btn:hover {
+    background-color: rgb(255, 80, 80);
+}
