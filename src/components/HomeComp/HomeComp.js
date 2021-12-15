@@ -1,5 +1,7 @@
 import { React, useState } from 'react';
 import InfoComp from '../InfoComp/InfoComp';
+import NavComp from '../NavComp/NavComp';
+
 import './homeComp.css';
 
 const HomeComp = () => {
@@ -10,8 +12,10 @@ const HomeComp = () => {
 
     const [data, setData] = useState([])
     const [clickedData, setClickedData] = useState([])
+    const [cartNum, setCartNum] = useState(0)
 
-    function getSearch() {
+    function getSearch(e) {
+        e.preventDefault()
         let search = document.querySelector('.search').value
         handleSearch(search)
     }
@@ -50,17 +54,37 @@ const HomeComp = () => {
         infoContainer.setAttribute('class', 'hidden')
     }
 
+    function saveToCart() {
+        let storage = JSON.parse(localStorage.getItem('savedFoodItems'))
+        if (storage === null) {
+            storage = []
+        }
+        let foodItem = {
+            id: clickedData[0].fdcId,
+            name: clickedData[0].description,
+            cal: clickedData[0].foodNutrients[3].value
+        }
+        storage.push(foodItem)
+        localStorage.setItem('savedFoodItems', JSON.stringify(storage))
+        setCartNum(cartNum +1)
+    }
+
 
     return (
         <div>
+            <NavComp 
+                num={cartNum}
+            />
             <div className='title-container'>
                 <h1>Food Finder</h1>
                 <p>Search the USDA database for a type of food and get all the info you need.</p>
                 <p>Create a list of saved foods you are interested in</p>
             </div>
             <div className='search-container'>
-                <input className='search' placeholder='Enter a Food'></input>
-                <button className='search-btn' onClick={getSearch}>Search</button>
+                <form onKeyDown={(e) => e.key === '13' ? getSearch : ''}>
+                    <input className='search' placeholder='Enter a Food'></input>
+                    <button className='search-btn' onClick={getSearch}>Search</button>
+                </form>
             </div>
             <div className='main-content'>
                 {data.map(food => (
@@ -80,6 +104,7 @@ const HomeComp = () => {
                                 <InfoComp
                                     data={clickedData}
                                     hideInfo={hideInfo}
+                                    saveToCart={saveToCart}
                                 />
                             </div>
                         </div>
