@@ -14,15 +14,19 @@
 .title-container h1 {
     font-size: 50px;
     font-family: sans-serif;
+    margin-bottom: 30px;
 }
 
-.title-container p {
+.title-detail {
     color: rgb(128, 128, 128);
 }
 
 .search-container {
     text-align: center;
+}
 
+.search-container form {
+    margin-bottom: 25px;
 }
 
 .search {

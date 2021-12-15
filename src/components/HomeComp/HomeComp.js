@@ -10,6 +10,7 @@ const HomeComp = () => {
     const [data, setData] = useState([])
     const [clickedData, setClickedData] = useState([])
     const [cartNum, setCartNum] = useState(0)
+    const [added, setAdded ]= useState("")
 
     // getting search value and calling handle search function
     function getSearch(e) {
@@ -47,6 +48,7 @@ const HomeComp = () => {
             infoContainer.removeAttribute('class', 'hidden')
             infoContainer.setAttribute('class', 'show')
         }
+        setAdded("")
 
     }
 
@@ -74,6 +76,7 @@ const HomeComp = () => {
         storage.push(foodItem)
         localStorage.setItem('savedFoodItems', JSON.stringify(storage))
         setCartNum(cartNum + 1)
+        setAdded("Added to Cart!")
     }
 
 
@@ -84,14 +87,15 @@ const HomeComp = () => {
             />
             <div className='title-container'>
                 <h1>Food Finder</h1>
-                <p>Search the USDA database for a type of food and get all the info you need.</p>
-                <p>Create a list of saved foods you are interested in</p>
+                <p className='title-detail'>Search the USDA database for a type of food and get all the info you need</p>
+                <p className='title-detail'>Create a list of saved foods you are interested in</p>
             </div>
             <div className='search-container'>
                 <form onKeyDown={(e) => e.key === '13' ? getSearch : ''}>
                     <input className='search' placeholder='Enter a Food'></input>
                     <button className='search-btn' onClick={getSearch}>Search</button>
                 </form>
+            <p className='title-detail'>Saved foods will appear in your cart and count your calories for you</p>
             </div>
             <div className='main-content'>
                 <div id='info-container' className='hidden'>
@@ -99,6 +103,7 @@ const HomeComp = () => {
                         data={clickedData}
                         hideInfo={hideInfo}
                         saveToCart={saveToCart}
+                        added={added}
                     />
                 </div>
                 {data.map(food => (

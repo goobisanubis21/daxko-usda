@@ -27,6 +27,7 @@ const InfoComp = (props) => {
                         </div>
                     </div>
                     <button onClick={props.saveToCart} className='save-btn'>Save To Cart</button>
+                    <p className='added-cart'>{props.added}</p>
                 </div>
             </div>
         )
